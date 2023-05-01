@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
 class MyUserManager(BaseUserManager):
 
@@ -30,7 +30,7 @@ class MyUserManager(BaseUserManager):
         return user
 
 
-class MyUser(AbstractBaseUser):
+class MyUser(AbstractBaseUser, PermissionsMixin):
 
     # def user_directory_path(instance, filename):
     #     return 'avatars/user_{0}/{1}'.format(instance.id, filename)
@@ -40,26 +40,20 @@ class MyUser(AbstractBaseUser):
     creationDate = models.DateTimeField(auto_now_add=True)
     lastLogin = models.DateTimeField(auto_now=True)
     isEditor = models.BooleanField(default=False, blank=True)
+    isProjectManager = models.BooleanField(default=False, blank=True)
     
     #hide_mail = models.BooleanField(default=True)
-    # phone_number = models.PositiveIntegerField(null=True, unique=True, validators=[MinValueValidator(111111111), MaxValueValidator(999999999)])
+    #phone_number = models.PositiveIntegerField(null=True, unique=True, validators=[MinValueValidator(111111111), MaxValueValidator(999999999)])
     #image = models.ImageField(null=True, blank=True, upload_to=user_directory_path, default="model.png")
-
-    is_admin = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
+
+    is_staff =models.BooleanField(default=False)
+    is_active=models.BooleanField(default=True)
+    is_admin=models.BooleanField(default=False)
 
     objects = MyUserManager()
 
     def __str__(self):
         return self.username
-    
-    def has_perm(self, perm, obj=None):
-        return self.is_admin
-
-    def has_module_perms(self, app_Label):
-        return True

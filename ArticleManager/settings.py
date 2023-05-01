@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'customUser.MyUser'
+AUTH_USER_MODEL = "customUser.MyUser"
 
 
 # Application definition
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
 
     'internalAPI.apps.InternalapiConfig',
     'externalAPI.apps.ExternalapiConfig',

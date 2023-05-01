@@ -9,13 +9,13 @@ class Project(models.Model):
     startDate = models.DateField(auto_now_add=True)
     isFinished = models.BooleanField(default=False)
 
-    def __string__(self):
+    def __str__(self):
         return self.name
 
 class Text(models.Model):
-    author = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    body = models.TextField(max_length=2000, null=False)
+    author = models.ForeignKey(MyUser, on_delete=models.CASCADE, blank=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=False, blank=False)
+    body = models.TextField(blank=False)
     creationDate = models.DateField(auto_now_add=True)
     lastModified =  models.DateField(auto_now=True)
 
