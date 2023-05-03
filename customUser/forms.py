@@ -29,12 +29,6 @@ class MyUserCreationForm(forms.ModelForm):
             user.save()
         return user
 
-class MyUserCreationForm(UserCreationForm):
-
-    class Meta:
-        model = MyUser
-        fields = ("email", "username")
-
 class MyUserChangeForm(UserChangeForm):
 
     class Meta:

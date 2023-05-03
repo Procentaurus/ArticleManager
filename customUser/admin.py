@@ -23,10 +23,10 @@ class MyUserAdmin(UserAdmin):
     model = MyUser
     list_display = ("email", "username", "isProjectManager", "isEditor")
     list_filter = ("email", "username", "isProjectManager")
-    readonly_fields = ("email", "username", "lastLogin", "creationDate")
+    readonly_fields = ("lastLogin", "creationDate")
     fieldsets = (
-        (None, {"fields": ("email", "username", "password")}),
-        ("Permissions", {"fields": ("creationDate","lastLogin","isEditor","isProjectManager", "is_active")}),
+        (None, {"fields": ("email", "username", "password", "creationDate")}),
+        ("Permissions", {"fields": ("lastLogin","isEditor","isProjectManager", "is_active")}),
     )
     add_fieldsets = (
         (None, {

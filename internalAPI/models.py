@@ -6,7 +6,7 @@ class Project(models.Model):
     name = models.CharField(max_length=40, unique=True)
     manager = models.OneToOneField(MyUser,related_name='manager', on_delete=models.SET_NULL, null=True)
     writers = models.ManyToManyField(MyUser,related_name='writers')
-    startDate = models.DateField(auto_now_add=True)
+    startDate = models.DateField()
     isFinished = models.BooleanField(default=False)
 
     def __str__(self):

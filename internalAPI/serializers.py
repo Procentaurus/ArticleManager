@@ -34,10 +34,9 @@ class ProjectFullSerializer(serializers.ModelSerializer):
     writers = MyUserFullSerializer(many=True)
 
     class Meta:
-        model = Comment
+        model = Project
         fields = ['name', 'manager', 'writers', 'startDate', 'isFinished']
         lookup_field = 'name'
-
 
 
 # ------------- Text Serializers ------------
@@ -78,7 +77,7 @@ class CommentFormSerializer(serializers.ModelSerializer):
     text = serializers.PrimaryKeyRelatedField(queryset=Text.objects.all())
     
     class Meta:
-        model = Text
+        model = Comment
         fields = ['text', 'body']
 
 class CommentLightSerializer(serializers.ModelSerializer):
@@ -87,8 +86,8 @@ class CommentLightSerializer(serializers.ModelSerializer):
     text = serializers.PrimaryKeyRelatedField(queryset=Text.objects.all())
 
     class Meta:
-        model = Text
-        fields = ['author', 'project', 'body', 'creationDate']
+        model = Comment
+        fields = ['author', 'body', 'creationDate', 'text']
 
 
 class CommentFullSerializer(serializers.ModelSerializer):
@@ -97,5 +96,5 @@ class CommentFullSerializer(serializers.ModelSerializer):
     text = TextLightSerializer()
 
     class Meta:
-        model = Text
+        model = Comment
         fields = ['author', 'text', 'body', 'creationDate']
