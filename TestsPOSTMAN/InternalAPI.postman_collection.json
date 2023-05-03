@@ -1,0 +1,494 @@
+{
+	"info": {
+		"_postman_id": "c0c43a96-e7e3-46db-94b7-4ffb322c6fff",
+		"name": "InternalAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Text",
+			"item": [
+				{
+					"name": "TextList GET",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Stefan)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/texts/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"texts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TextList POST",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Stefan)}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project\": \"PismoPG Maj\",\r\n    \"body\": \"To jest moja nowa wiadomość. Jest useless , ale zawsze coś.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mainUrl}}/texts/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"texts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TextDetail GET",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(micha)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/texts/1/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"texts",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TextDetail DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Stefan)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/texts/5/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"texts",
+								"5",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TextDetail PATCH",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Stefan)}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"body\": \"To jest moja nowa wiadomość. Jest useless , ale zawsze coś. XDDDDDD\",\r\n    \"project\": \"PismoPG Masdj\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mainUrl}}/texts/6/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"texts",
+								"6",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "CommentList GET",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(dzik12)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/comments/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"comments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CommentList POST",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(dzik12)}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": \"2\",\r\n    \"body\": \"Stary litości. Napisałbyś coś lepszego. To jest poważna firma.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mainUrl}}/comments/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"comments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CommentDetail GET",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(micha)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/comments/1/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"comments",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CommentDetail PATCH",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(micha)}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\" : \"6\",\r\n    \"body\": \"Dobra. Sorry bro. Trochę mnie poniosło. Twój tekst po prostu nie jest najlepszy.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mainUrl}}/comments/1/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"comments",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CommentDetail DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(dzik12)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/comments/1/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"comments",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "ProjectList GET",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Bismarck)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/projects/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"projects",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProjectList POST",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Bismarck)}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jak zgapiać na egz z PAA\",\r\n    \"manager\": \"Wilhelm\",\r\n    \"writers\": [\"micha\", \"dzik12\"],\r\n    \"startDate\": \"2023-04-30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mainUrl}}/projects/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"projects",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProjectDetail GET",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Bismarck)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/projects/PismoPG Maj/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"projects",
+								"PismoPG Maj",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Project Detail PATCH",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Bismarck)}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"PismoPG Maj\",\r\n    \"manager\": \"micha\",\r\n    \"writers\":[\"Wilhelm\"],\r\n    \"startDate\": \"2023-09-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mainUrl}}/projects/PismoPG Maj/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"projects",
+								"PismoPG Maj",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProjectDetail DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Bismarck)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/projects/Jak zgapiać na egz z PAA/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"projects",
+								"Jak zgapiać na egz z PAA",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "mainUrl",
+			"value": "http://127.0.0.1:8000/internal",
+			"type": "default"
+		},
+		{
+			"key": "token(dzik12)",
+			"value": "-----",
+			"type": "default"
+		},
+		{
+			"key": "token(Stefan)",
+			"value": "-----",
+			"type": "default"
+		},
+		{
+			"key": "token(micha)",
+			"value": "-----",
+			"type": "default"
+		},
+		{
+			"key": "token(Bismarck)",
+			"value": "-----",
+			"type": "default"
+		}
+	]
+}

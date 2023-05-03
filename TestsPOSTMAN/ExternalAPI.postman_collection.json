@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "815b66fa-7387-49f0-8b6c-b333833d3a69",
+		"name": "ExternalAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Publication",
+			"item": [
+				{
+					"name": "PublicationList GET",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Bismarck)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/publications/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"publications",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PublicationList POST",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Bismarck)}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"manager\": \"Stasiu\",\r\n    \"title\": \"Kotki i psy\",\r\n    \"body\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales ipsum vitae maximus ultrices. Ut vulputate eros eu nulla tempus, nec gravida orci porttitor. Nunc quis massa dolor. Nam facilisis vehicula placerat. Ut quis accumsan purus, vel efficitur metus. Proin a lectus faucibus, facilisis dolor sed, porta neque. Praesent vitae leo ipsum. Nunc eros ipsum, maximus vel iaculis ornare, efficitur quis purus. Nullam eget varius sem, eu ultrices arcu. Maecenas felis libero, dignissim vel vestibulum et, fringilla id lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In at viverra neque. Duis nisl mauris, aliquet non pretium id, viverra eu erat. Donec mollis orci libero, in ornare neque auctor at. Vivamus ornare nunc eu posuere sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut lobortis ultrices tortor eu ultricies. Morbi vitae ante et nunc pellentesque ultricies. Pellentesque pharetra placerat risus id commodo. Suspendisse condimentum iaculis risus, a accumsan erat lobortis at. Sed sem nulla, sodales vel urna eu, facilisis sodales dui. Donec nec leo sodales, semper odio a, condimentum metus. Morbi sed odio nisi. Fusce posuere, massa nec placerat fermentum, dui metus tempor neque, id placerat diam justo nec ante. Quisque rhoncus convallis justo vel rhoncus. Donec hendrerit luctus risus, lacinia placerat urna ultricies a. Pellentesque at tincidunt velit. Aenean eleifend, lectus sit amet interdum ultricies, erat eros gravida erat, et hendrerit arcu ante eget dolor. Sed tristique eleifend hendrerit. Donec pulvinar sapien a lacus lobortis fermentum. Etiam porttitor porttitor aliquet. Curabitur accumsan, tortor ut blandit mollis, justo dolor feugiat justo, nec fermentum dui libero quis odio. Aliquam eget leo tincidunt lacus venenatis ornare et quis augue. Donec vehicula fringilla nisl. Donec nunc quam, interdum eu libero quis, porttitor luctus metus. Nullam diam turpis, facilisis vitae bibendum eget, posuere nec risus. Cras a justo consequat, feugiat purus vel, euismod lorem. Etiam rutrum quis dolor quis finibus. Phasellus ac varius massa, a porttitor magna. In finibus mattis mi, nec lacinia ex mollis vel. Aenean efficitur auctor tellus, quis feugiat tortor egestas vel. Donec non diam sodales, placerat orci ac, viverra urna. Phasellus ullamcorper consequat sem, quis gravida ex ullamcorper ac. Integer nibh enim, rutrum vel est at, maximus mollis est. Nullam luctus arcu eget dui feugiat maximus. Aliquam convallis massa dui, in posuere turpis porttitor ut. Nullam in justo lobortis mauris porta congue ullamcorper non metus. Ut volutpat velit augue, sed posuere libero sodales id. Aliquam congue urna neque, in lacinia nulla hendrerit in. Donec aliquet elementum nibh, vel dignissim lorem suscipit ac. In at arcu malesuada, iaculis mi id, aliquam nulla. Vestibulum placerat leo ac orci accumsan euismod. Aenean congue fringilla ornare. Nunc tellus nibh, vulputate nec nunc in, varius dignissim magna. Vivamus posuere lacus non ornare ultricies. Donec eu est nec libero dapibus pellentesque vel quis nulla. Aliquam eu tortor vulputate augue rutrum cursus. Morbi nec purus a mi ultrices pretium ac non eros. Aliquam erat volutpat. Aenean tincidunt imperdiet nibh ut.\",\r\n    \"isAvailable\": \"False\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mainUrl}}/publications/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"publications",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PublicationDetail GET",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Bismarck)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/publications/Kraken is coming/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"publications",
+								"Kraken is coming",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PublicationDetail PATCH",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Bismarck)}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"manager\": \"Stasiu\",\r\n    \"title\": \"Kotki i psy vol345345345345\",\r\n    \"body\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales ipsum vitae maximus ultrices. Ut vulputate eros eu nulla tempus, nec gravida orci porttitor. Nunc quis massa dolor. Nam facilisis vehicula placerat. Ut quis accumsan purus, vel efficitur metus. Proin a lectus faucibus, facilisis dolor sed, porta neque. Praesent vitae leo ipsum. Nunc eros ipsum, maximus vel iaculis ornare, efficitur quis purus. Nullam eget varius sem, eu ultrices arcu. Maecenas felis libero, dignissim vel vestibulum et, fringilla id lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In at viverra neque. Duis nisl mauris, aliquet non pretium id, viverra eu erat. Donec mollis orci libero, in ornare neque auctor at. Vivamus ornare nunc eu posuere sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut lobortis ultrices tortor eu ultricies. Morbi vitae ante et nunc pellentesque ultricies. Pellentesque pharetra placerat risus id commodo. Suspendisse condimentum iaculis risus, a accumsan erat lobortis at. Sed sem nulla, sodales vel urna eu, facilisis sodales dui. Donec nec leo sodales, semper odio a, condimentum metus. Morbi sed odio nisi. Fusce posuere, massa nec placerat fermentum, dui metus tempor neque, id placerat diam justo nec ante. Quisque rhoncus convallis justo vel rhoncus. Donec hendrerit luctus risus, lacinia placerat urna ultricies a. Pellentesque at tincidunt velit. Aenean eleifend, lectus sit amet interdum ultricies, erat eros gravida erat, et hendrerit arcu ante eget dolor. Sed tristique eleifend hendrerit. Donec pulvinar sapien a lacus lobortis fermentum. Etiam porttitor porttitor aliquet. Curabitur accumsan, tortor ut blandit mollis, justo dolor feugiat justo, nec fermentum dui libero quis odio. Aliquam eget leo tincidunt lacus venenatis ornare et quis augue. Donec vehicula fringilla nisl. Donec nunc quam, interdum eu libero quis, porttitor luctus metus. Nullam diam turpis, facilisis vitae bibendum eget, posuere nec risus. Cras a justo consequat, feugiat purus vel, euismod lorem. Etiam rutrum quis dolor quis finibus. Phasellus ac varius massa, a porttitor magna. In finibus mattis mi, nec lacinia ex mollis vel. Aenean efficitur auctor tellus, quis feugiat tortor egestas vel. Donec non diam sodales, placerat orci ac, viverra urna. Phasellus ullamcorper consequat sem, quis gravida ex ullamcorper ac. Integer nibh enim, rutrum vel est at, maximus mollis est. Nullam luctus arcu eget dui feugiat maximus. Aliquam convallis massa dui, in posuere turpis porttitor ut. Nullam in justo lobortis mauris porta congue ullamcorper non metus. Ut volutpat velit augue, sed posuere libero sodales id. XD\",\r\n    \"isAvailable\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mainUrl}}/publications/Kotki i psy vol2/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"publications",
+								"Kotki i psy vol2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PublicationDetail DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token(Bismarck)}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{mainUrl}}/publications/Kotki i psy vol345345345345/",
+							"host": [
+								"{{mainUrl}}"
+							],
+							"path": [
+								"publications",
+								"Kotki i psy vol345345345345",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "mainUrl",
+			"value": "-----",
+			"type": "default"
+		},
+		{
+			"key": "token(Bismarck)",
+			"value": "-----",
+			"type": "default"
+		}
+	]
+}
