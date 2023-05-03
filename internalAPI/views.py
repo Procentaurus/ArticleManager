@@ -8,7 +8,7 @@ from knox.auth import TokenAuthentication
 
 from .serializers import *
 from .models import *
-from .permissions import *
+from ArticleManager.permissions import *
 from ArticleManager.throttlers import TextRateThrottle, CommentRateThrottle, ProjectRateThrottle
 
 

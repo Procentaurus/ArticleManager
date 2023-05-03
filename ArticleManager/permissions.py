@@ -1,6 +1,6 @@
 from rest_framework import permissions
 
-from .models import *
+from ..internalAPI.models import *
 
 # --------   Position permissions  --------
 
