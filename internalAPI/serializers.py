@@ -56,7 +56,7 @@ class TextLightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Text
-        fields = ['author', 'project', 'body', 'creationDate']
+        fields = ['id','author', 'project', 'body', 'creationDate']
 
 
 class TextFullSerializer(serializers.ModelSerializer):
@@ -66,7 +66,7 @@ class TextFullSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Text
-        fields = ['author', 'project', 'body', 'creationDate']
+        fields = ['id','author', 'project', 'body', 'creationDate']
 
 
 
@@ -80,6 +80,7 @@ class CommentFormSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ['text', 'body']
 
+
 class CommentLightSerializer(serializers.ModelSerializer):
 
     author = serializers.StringRelatedField()
@@ -87,7 +88,8 @@ class CommentLightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['author', 'body', 'creationDate', 'text']
+        fields = ["id",'author','body','creationDate', 'text']
+
 
 
 class CommentFullSerializer(serializers.ModelSerializer):
@@ -97,4 +99,4 @@ class CommentFullSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['author', 'text', 'body', 'creationDate']
+        fields = ["id",'author', 'text', 'body', 'creationDate']

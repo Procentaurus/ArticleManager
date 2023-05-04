@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .models import Publication
 from .serializers import *
-from internalAPI.permissions import ChoseSafeMethod, IsEditor, ChoseDeleteMethod
+from ArticleManager.permissions import ChoseSafeMethod, IsEditor
 from ArticleManager.throttlers import PublicationAllRateThrottle, PublicationUserRateThrottle
 
 
@@ -18,7 +18,7 @@ class PublicationList(mixins.ListModelMixin, mixins.CreateModelMixin,generics.Ge
     def get_serializer_class(self):
         if self.request.method == 'GET':
             if self.request.user.is_authenticated:
-                return PublicationInternalSerializer
+                return PublicationInternalMultiSerializer
             else:
                 return PublicationExternalMultiSerializer
         else:
@@ -61,7 +61,7 @@ class PublicationDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixi
     def get_serializer_class(self):
         if self.request.method == 'GET':
             if self.request.user.is_authenticated:
-                return PublicationInternalSerializer
+                return PublicationInternalSingleSerializer
             else:
                 return PublicationExternalSingleSerializer
         else:

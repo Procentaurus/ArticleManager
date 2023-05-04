@@ -10,15 +10,27 @@
 			"item": [
 				{
 					"name": "TextList GET",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Token {{token(Stefan)}}",
+								"value": "Token {{token(Bismarck)}}",
 								"type": "default"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"body\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{mainUrl}}/texts/",
 							"host": [
@@ -39,7 +51,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Token {{token(Stefan)}}",
+								"value": "Token {{token(Bismarck)}}",
 								"type": "default"
 							}
 						],
@@ -97,18 +109,18 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Token {{token(Stefan)}}",
+								"value": "Token {{token(micha)}}",
 								"type": "default"
 							}
 						],
 						"url": {
-							"raw": "{{mainUrl}}/texts/5/",
+							"raw": "{{mainUrl}}/texts/4f89787f-2088-4499-9423-6ec706f0962d/",
 							"host": [
 								"{{mainUrl}}"
 							],
 							"path": [
 								"texts",
-								"5",
+								"4f89787f-2088-4499-9423-6ec706f0962d",
 								""
 							]
 						}
@@ -122,13 +134,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Token {{token(Stefan)}}",
+								"value": "Token {{token(micha)}}",
 								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"body\": \"To jest moja nowa wiadomość. Jest useless , ale zawsze coś. XDDDDDD\",\r\n    \"project\": \"PismoPG Masdj\"\r\n}",
+							"raw": "{\r\n    \"body\": \"To jest moja nowa wiadomość. Jest useless , ale zawsze coś. XDDDDDD\",\r\n    \"project\": \"Jak zgapiać na egz z AKO\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -136,13 +148,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{mainUrl}}/texts/6/",
+							"raw": "{{mainUrl}}/texts/4f89787f-2088-4499-9423-6ec706f0962d/",
 							"host": [
 								"{{mainUrl}}"
 							],
 							"path": [
 								"texts",
-								"6",
+								"4f89787f-2088-4499-9423-6ec706f0962d",
 								""
 							]
 						}
@@ -161,7 +173,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Token {{token(dzik12)}}",
+								"value": "Token {{token(micha)}}",
 								"type": "default"
 							}
 						],
@@ -185,13 +197,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Token {{token(dzik12)}}",
+								"value": "Token {{token(micha)}}",
 								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"text\": \"2\",\r\n    \"body\": \"Stary litości. Napisałbyś coś lepszego. To jest poważna firma.\"\r\n}",
+							"raw": "{\r\n    \"text\": \"ae2db8c3-c22c-4c02-81b8-b6cb50da3406\",\r\n    \"body\": \"Essa\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -223,13 +235,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{mainUrl}}/comments/1/",
+							"raw": "{{mainUrl}}/comments/0ceb771c-6c7f-4776-9666-74456906f47b/",
 							"host": [
 								"{{mainUrl}}"
 							],
 							"path": [
 								"comments",
-								"1",
+								"0ceb771c-6c7f-4776-9666-74456906f47b",
 								""
 							]
 						}
@@ -277,18 +289,18 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Token {{token(dzik12)}}",
+								"value": "Token {{token(micha)}}",
 								"type": "default"
 							}
 						],
 						"url": {
-							"raw": "{{mainUrl}}/comments/1/",
+							"raw": "{{mainUrl}}/comments/0ceb771c-6c7f-4776-9666-74456906f47b/",
 							"host": [
 								"{{mainUrl}}"
 							],
 							"path": [
 								"comments",
-								"1",
+								"0ceb771c-6c7f-4776-9666-74456906f47b",
 								""
 							]
 						}
@@ -337,7 +349,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Jak zgapiać na egz z PAA\",\r\n    \"manager\": \"Wilhelm\",\r\n    \"writers\": [\"micha\", \"dzik12\"],\r\n    \"startDate\": \"2023-04-30\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Jak zgapiać na egz z PAA\",\r\n    \"manager\": \"dzik12\",\r\n    \"writers\": [\"Wilhelm\"],\r\n    \"startDate\": \"2023-04-30\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -395,7 +407,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"PismoPG Maj\",\r\n    \"manager\": \"micha\",\r\n    \"writers\":[\"Wilhelm\"],\r\n    \"startDate\": \"2023-09-01\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Jak zgapiać na egz z PAA\",\r\n    \"manager\": \"micha\",\r\n    \"writers\":[\"Wilhelm\"],\r\n    \"startDate\": \"2023-09-01\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -403,13 +415,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{mainUrl}}/projects/PismoPG Maj/",
+							"raw": "{{mainUrl}}/projects/Jak zgapiać na egz z PAA/",
 							"host": [
 								"{{mainUrl}}"
 							],
 							"path": [
 								"projects",
-								"PismoPG Maj",
+								"Jak zgapiać na egz z PAA",
 								""
 							]
 						}
@@ -466,17 +478,7 @@
 	],
 	"variable": [
 		{
-			"key": "mainUrl",
-			"value": "http://127.0.0.1:8000/internal",
-			"type": "default"
-		},
-		{
-			"key": "token(dzik12)",
-			"value": "-----",
-			"type": "default"
-		},
-		{
-			"key": "token(Stefan)",
+			"key": "token(Stasiu)",
 			"value": "-----",
 			"type": "default"
 		},
@@ -488,6 +490,11 @@
 		{
 			"key": "token(Bismarck)",
 			"value": "-----",
+			"type": "default"
+		},
+		{
+			"key": "mainUrl",
+			"value": "http://127.0.0.1:8000/internal",
 			"type": "default"
 		}
 	]

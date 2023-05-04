@@ -1,3 +1,4 @@
+from uuid import uuid4
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
@@ -34,7 +35,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     # def user_directory_path(instance, filename):
     #     return 'avatars/user_{0}/{1}'.format(instance.id, filename)
-
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     email = models.EmailField(max_length=50, unique=True)
     username = models.CharField(max_length=30, unique=True)
     creationDate = models.DateTimeField(auto_now_add=True)

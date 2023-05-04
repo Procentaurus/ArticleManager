@@ -76,7 +76,11 @@ class TextDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.Dest
         return Text.objects.all()
     
     def perform_update(self, serializer):
-        newProject = Project.objects.get(name=serializer.validated_data["project"])
+        try:
+            newProject = Project.objects.get(name=serializer.validated_data["project"])
+        except:
+            raise ValidationError("No such project.")
+        
         if self.request.user not in newProject.writers.all():
              raise ValidationError("You cant add text to chosen Project.")
 
@@ -97,7 +101,7 @@ class TextDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.Dest
 class CommentList(mixins.ListModelMixin, mixins.CreateModelMixin,generics.GenericAPIView):
 
     permission_classes = (
-        IsAuthenticated & ((~ChoseSafeMethod & WantToAddCommentToTextInOneOfHisProjects) | ChoseSafeMethod),
+        IsAuthenticated & ((~ChoseSafeMethod & WantToAddCommentToTextInOneOfHisProjects) | ChoseSafeMethod | IsEditor),
     )
     throttle_classes = (CommentRateThrottle,)
   
@@ -158,9 +162,13 @@ class CommentDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.D
         return Comment.objects.all()
     
     def perform_update(self, serializer):
-        text = serializer.validated_data["text"]
+        try:
+            text = serializer.validated_data["text"]
+        except:
+            raise ValidationError("There is no such text")
+
         if self.request.user not in text.project.writers.all():
-             raise ValidationError("You cant add comment to chosen Text.")
+            raise ValidationError("You cant add comment to chosen Text.")
 
         serializer.save()
             
@@ -205,7 +213,11 @@ class ProjectList(mixins.ListModelMixin, mixins.CreateModelMixin,generics.Generi
     
     def perform_create(self, serializer):
         
-        newManager = MyUser.objects.get(username=serializer.validated_data["manager"])
+        try:
+            newManager = MyUser.objects.get(username=serializer.validated_data["manager"])
+        except:
+            raise ValidationError("There is no such user as {}".format(serializer.validated_data["manager"]))
+        
         if newManager.isProjectManager:
             raise ValidationError("The chosen user can't become manager. He already is.")
         else:
@@ -250,9 +262,12 @@ class ProjectDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.D
 
     def perform_update(self, serializer):
 
-        project = Project.objects.get(name=self.kwargs['name'])
+        try:
+            project = Project.objects.get(name=self.kwargs['name'])
+        except:
+            raise ValidationError("There is no project of name {}".format(self.kwargs['name']))
 
-        if project.manager != serializer.validated_data["manager"]:
+        if project.manager != serializer.validated_data["manager"] and not serializer.validated_data["manager"].isProjectManager:
             project.manager.isProjectManager = False
             project.manager.save()
             
