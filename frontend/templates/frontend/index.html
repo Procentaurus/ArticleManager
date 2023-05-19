@@ -43,13 +43,13 @@
     <button id="logoutButton">log out</button>
 </marquee>
 <marquee>
-        <button id="textsButton">texts</button>
+    <button id="textsButton">texts</button>
 </marquee>
 <marquee>
     <button id="commentsButton">comments</button>
 </marquee>
 
-<div id="responseContainer"></div>
+<div id="responseContainer">response should go here</div>
 
 
 <script>
@@ -130,8 +130,19 @@
                 'Authorization': 'Token ' + token
             },
             success: function (response) {
+                var html = '';
+
+                // Iterate over each object in the array
+                response.forEach(function (obj) {
+                    // Iterate over each key-value pair in the object
+                    Object.keys(obj).forEach(function (key) {
+                        var value = obj[key];
+                        html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
+                    });
+                });
+
                 // Display the response as plain HTML
-                $('#responseContainer').html(response);
+                $('#responseContainer').html(html);
             },
             error: function (xhr, status, error) {
                 console.error(error);
@@ -148,8 +159,19 @@
                 'Authorization': 'Token ' + token
             },
             success: function (response) {
+                var html = '';
+
+                // Iterate over each object in the array
+                response.forEach(function (obj) {
+                    // Iterate over each key-value pair in the object
+                    Object.keys(obj).forEach(function (key) {
+                        var value = obj[key];
+                        html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
+                    });
+                });
+
                 // Display the response as plain HTML
-                $('#responseContainer').html(response);
+                $('#responseContainer').html(html);
             },
             error: function (xhr, status, error) {
                 console.error(error);
