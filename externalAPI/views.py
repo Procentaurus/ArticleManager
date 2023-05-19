@@ -1,7 +1,8 @@
 from rest_framework import mixins, generics
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
+import bleach
 
 from .models import Publication
 from .serializers import *
@@ -43,6 +44,10 @@ class PublicationList(mixins.ListModelMixin, mixins.CreateModelMixin,generics.Ge
     def filter_queryset(self, queryset):
         return super().filter_queryset(queryset)
     
+    def perform_create(self, serializer):
+        serializer_cleaned = serializer.create(serializer.validated_data)
+        serializer_cleaned.save()
+    
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
     
@@ -83,6 +88,22 @@ class PublicationDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixi
 
         serializer = self.get_serializer(instance)
         return serializer.data
+    
+    def perform_update(self, serializer):
+        serializer_cleaned = serializer.validated_data
+
+        try:
+            instance = self.get_object()
+        except:
+            raise ValidationError("Publication instance not found.")
+        
+        instance.body = serializer_cleaned["body"]
+        instance.title = serializer_cleaned["title"]
+        instance.isAvailable = serializer_cleaned["isAvailable"]
+        if instance.manager != serializer_cleaned["manager"]:
+            instance.project = serializer_cleaned["manager"]
+
+        instance.save()
     
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
+import bleach
 
 from .models import MyUser
-from .backends import CaseInsensitiveModelBackend
 
 class MyUserLightSerializer(serializers.ModelSerializer):
 
@@ -34,7 +34,7 @@ class RegisterSerializer(serializers.ModelSerializer):
                     }
 
     def create(self, validated_data):
-        user = MyUser.objects.create_user(validated_data['email'], validated_data['username'], validated_data['password'])
+        user = MyUser.objects.create_user(bleach.clean(validated_data['email']), bleach.clean(validated_data['username']), validated_data['password'])
         return user
 
 

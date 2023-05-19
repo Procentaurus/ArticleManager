@@ -1,4 +1,5 @@
 from rest_framework import serializers
+import bleach
 
 from .models import *
 from customUser.serializers import *
@@ -12,7 +13,7 @@ class ProjectFormSerializer(serializers.ModelSerializer):
         
     manager = serializers.SlugRelatedField(slug_field='username', queryset=MyUser.objects.all())
     writers = serializers.SlugRelatedField(slug_field='username', queryset=MyUser.objects.all(), many=True)
-
+    
     class Meta:
         model = Project
         fields = ['name', 'manager', 'writers', 'startDate']
@@ -44,6 +45,14 @@ class ProjectFullSerializer(serializers.ModelSerializer):
 class TextFormSerializer(serializers.ModelSerializer):
 
     project = serializers.SlugRelatedField(slug_field='name', queryset=Project.objects.all())
+
+    def validate(self, attrs):
+        sanitized_attrs = {}
+        for key, value in attrs.items():
+            sanitized_value = bleach.clean(value)
+            sanitized_attrs[key] = sanitized_value
+        return sanitized_attrs
+
     
     class Meta:
         model = Text
@@ -75,6 +84,14 @@ class TextFullSerializer(serializers.ModelSerializer):
 class CommentFormSerializer(serializers.ModelSerializer):
 
     text = serializers.PrimaryKeyRelatedField(queryset=Text.objects.all())
+
+    def validate(self, attrs):
+        sanitized_attrs = {}
+        for key, value in attrs.items():
+            sanitized_value = bleach.clean(value)
+            sanitized_attrs[key] = sanitized_value
+        return sanitized_attrs
+
     
     class Meta:
         model = Comment

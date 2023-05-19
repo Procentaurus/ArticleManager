@@ -1,10 +1,10 @@
-from rest_framework import mixins
-from rest_framework import generics
+from rest_framework import mixins, generics
 from rest_framework.permissions import IsAuthenticated
 import datetime
 from rest_framework.exceptions import ValidationError
 
 from knox.auth import TokenAuthentication
+import bleach
 
 from .serializers import *
 from .models import *
@@ -42,10 +42,13 @@ class TextList(mixins.ListModelMixin, mixins.CreateModelMixin,generics.GenericAP
             return texts
       
     def filter_queryset(self, queryset):
-        return super().filter_queryset(queryset)
+       return super().filter_queryset(queryset)
     
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, creationDate=datetime.datetime.now())    
+        serializer.is_valid(raise_exception=True)
+
+        instance = serializer.create({**serializer.validated_data, 'author': self.request.user, 'creationDate': datetime.datetime.now()})
+        instance.save()    
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -76,15 +79,28 @@ class TextDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.Dest
         return Text.objects.all()
     
     def perform_update(self, serializer):
+
+        serializer_cleaned_data = serializer.validated_data
+
         try:
-            newProject = Project.objects.get(name=serializer.validated_data["project"])
+            instance = self.get_object()
+        except:
+            raise ValidationError("Text instance not found.")
+
+        try:
+            newProject = Project.objects.get(name=serializer_cleaned_data["project"])
         except:
             raise ValidationError("No such project.")
         
         if self.request.user not in newProject.writers.all():
              raise ValidationError("You cant add text to chosen Project.")
 
-        serializer.save()
+        # Update instance with cleaned data
+        instance.body = serializer_cleaned_data["body"]
+        if instance.project != newProject:
+            instance.project = newProject
+
+        instance.save()
             
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
@@ -130,7 +146,10 @@ class CommentList(mixins.ListModelMixin, mixins.CreateModelMixin,generics.Generi
         return super().filter_queryset(queryset)
     
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, creationDate=datetime.datetime.now())    
+
+        serializer.is_valid(raise_exception=True)
+        instance = serializer.create({**serializer.validated_data, 'author': self.request.user, 'creationDate': datetime.datetime.now()})
+        instance.save()  
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -162,15 +181,21 @@ class CommentDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.D
         return Comment.objects.all()
     
     def perform_update(self, serializer):
-        try:
-            text = serializer.validated_data["text"]
-        except:
-            raise ValidationError("There is no such text")
 
-        if self.request.user not in text.project.writers.all():
+        serializer_cleaned = serializer.validated_data
+        try:
+            instance = self.get_object()
+        except:
+            raise ValidationError("Comment instance not found.")
+
+        if self.request.user not in instance.text.project.writers.all():
             raise ValidationError("You cant add comment to chosen Text.")
 
-        serializer.save()
+        instance.body = serializer_cleaned["body"]
+        if instance.text != serializer_cleaned["text"]:
+            instance.project = serializer_cleaned["text"]
+
+        instance.save()
             
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
@@ -221,6 +246,9 @@ class ProjectList(mixins.ListModelMixin, mixins.CreateModelMixin,generics.Generi
         if newManager.isProjectManager:
             raise ValidationError("The chosen user can't become manager. He already is.")
         else:
+            name = bleach.clean(serializer.validated_data.get('name'))
+            serializer.validated_data['name'] = name
+
             instance = serializer.save()
             instance.writers.add(newManager)
             newManager.isProjectManager = True
@@ -263,9 +291,9 @@ class ProjectDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.D
     def perform_update(self, serializer):
 
         try:
-            project = Project.objects.get(name=self.kwargs['name'])
+            project = Project.objects.get(name=bleach.clean(self.kwargs['name']))
         except:
-            raise ValidationError("There is no project of name {}".format(self.kwargs['name']))
+            raise ValidationError("There is no project of name {}".format(bleach.clean(self.kwargs['name'])))
 
         if project.manager != serializer.validated_data["manager"] and not serializer.validated_data["manager"].isProjectManager:
             project.manager.isProjectManager = False
