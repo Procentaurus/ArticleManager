@@ -5,6 +5,25 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<h2>Register Form</h2>
+<form id="registerForm" method="post" action="http://127.0.0.1:8000/user/register/">
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="register_email" name="register_email" required>
+    </div>
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="register_username" name="register_username" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="register_password" name="register_password" required>
+    </div>
+    <div>
+        <input type="submit" value="Register">
+    </div>
+</form>
+
 <h2>Login Form</h2>
 <form id="loginForm" method="post" action="http://127.0.0.1:8000/user/login/">
     <div>
@@ -19,56 +38,125 @@
         <input type="submit" value="Login">
     </div>
 </form>
-<h1 id="responseContainer"></h1>
+
+<marquee>
+    <button id="logoutButton">log out</button>
+</marquee>
+<marquee>
+        <button id="textsButton">texts</button>
+</marquee>
+<marquee>
+    <button id="commentsButton">comments</button>
+</marquee>
+
+<div id="responseContainer"></div>
+
 
 <script>
 
-  $(document).ready(function() {
-    $('#loginForm').submit(function(e) {
-      e.preventDefault();
+    $(document).ready(function () {
+        $('#loginForm').submit(function (e) {
+            e.preventDefault();
 
-      var formData = {
-        email: $('#email').val(),
-        password: $('#password').val()
-      };
+            var formData = {
+                email: $('#email').val(),
+                password: $('#password').val()
+            };
 
-      $.ajax({
-        type: 'POST',
-        url: $(this).attr('action'),
-        data: formData,
-        success: function(response) {
-          // Perform any other actions upon successful login
-          // ...
-            console.log(response.token)
-            localStorage.setItem('token', response.token);
-          // Send a new request immediately after login
-            sendNewRequest();
-        },
-        error: function(xhr, status, error) {
-          console.error(error);
-        }
-      });
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                success: function (response) {
+                    // Perform any other actions upon successful login
+                    // ...
+                    console.log(response.token)
+                    localStorage.setItem('token', response.token);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        $('#registerForm').submit(function (e) {
+            e.preventDefault();
+
+            var formData = {
+                email: $('#register_email').val(),
+                username: $('#register_username').val(),
+                password: $('#register_password').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                success: function (response) {
+                    console.log(response)
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
     });
 
-    function sendNewRequest() {
-      var token = localStorage.getItem('token');
+    document.getElementById("logoutButton").addEventListener("click", function () {
+        var token = localStorage.getItem('token');
+        $.ajax({
+            type: 'POST',
+            url: 'http://127.0.0.1:8000/user/logout/',
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            success: function (response) {
+                // Display the response as plain HTML
+                $('#responseContainer').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+        localStorage.setItem('token', '');
+    });
 
-      $.ajax({
-        type: 'GET',
-        url: 'http://127.0.0.1:8000/internal/texts',
-        headers: {
-          'Authorization': 'Token ' + token
-        },
-        success: function(response) {
-          // Display the response as plain HTML
-          $('#responseContainer').html(response);
-        },
-        error: function(xhr, status, error) {
-          console.error(error);
-        }
-      });
-    }
-  });
+    document.getElementById("textsButton").addEventListener("click", function () {
+        var token = localStorage.getItem('token');
+        $.ajax({
+            type: 'GET',
+            url: 'http://127.0.0.1:8000/internal/texts/',
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            success: function (response) {
+                // Display the response as plain HTML
+                $('#responseContainer').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
+    document.getElementById("commentsButton").addEventListener("click", function () {
+        var token = localStorage.getItem('token');
+        $.ajax({
+            type: 'GET',
+            url: 'http://127.0.0.1:8000/internal/comments/',
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            success: function (response) {
+                // Display the response as plain HTML
+                $('#responseContainer').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
 </script>
 
 </body>
