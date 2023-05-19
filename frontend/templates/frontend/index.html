@@ -1,5 +1,49 @@
 <html>
+    <head>
+
+    </head>
     <body>
-        
+        <h1>Topic</h1>
     </body>
 </html>
+
+<script>
+    var authToken;
+
+    fetch('http://127.0.0.1:8000/user/login/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        email: "michalski.44@wp.pl",
+        password: "123456PIOTR"
+    })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        authToken = data["token"];
+    })
+    .catch(error => {
+        // Handle any errors that occur during the request
+        console.error('Error:', error);
+    });
+
+    setTimeout(() => {
+        fetch('http://127.0.0.1:8000/internal/texts/', {
+        headers: {
+            'Authorization': `Token ${authToken}`
+        }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response data here
+            console.log(data);
+        })
+        .catch(error => {
+            // Handle any errors that occur during the request
+            console.error('Error:', error);
+        });
+    }, 2000);
+</script>
