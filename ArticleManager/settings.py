@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'internalAPI.apps.InternalapiConfig',
     'externalAPI.apps.ExternalapiConfig',
     'customUser.apps.CustomuserConfig',
+    'frontend.apps.FrontendConfig'
 ]
 
 REST_FRAMEWORK = {
