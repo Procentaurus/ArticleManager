@@ -1,49 +1,75 @@
+<!DOCTYPE html>
 <html>
-    <head>
-
-    </head>
-    <body>
-        <h1>Topic</h1>
-    </body>
-</html>
+<head>
+    <title>Login Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h2>Login Form</h2>
+<form id="loginForm" method="post" action="http://127.0.0.1:8000/user/login/">
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <input type="submit" value="Login">
+    </div>
+</form>
+<h1 id="responseContainer"></h1>
 
 <script>
-    var authToken;
 
-    fetch('http://127.0.0.1:8000/user/login/', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        email: "michalski.44@wp.pl",
-        password: "123456PIOTR"
-    })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        authToken = data["token"];
-    })
-    .catch(error => {
-        // Handle any errors that occur during the request
-        console.error('Error:', error);
+  $(document).ready(function() {
+    $('#loginForm').submit(function(e) {
+      e.preventDefault();
+
+      var formData = {
+        email: $('#email').val(),
+        password: $('#password').val()
+      };
+
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: formData,
+        success: function(response) {
+          // Perform any other actions upon successful login
+          // ...
+            console.log(response.token)
+            localStorage.setItem('token', response.token);
+          // Send a new request immediately after login
+            sendNewRequest();
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
     });
 
-    setTimeout(() => {
-        fetch('http://127.0.0.1:8000/internal/texts/', {
+    function sendNewRequest() {
+      var token = localStorage.getItem('token');
+
+      $.ajax({
+        type: 'GET',
+        url: 'http://127.0.0.1:8000/internal/texts',
         headers: {
-            'Authorization': `Token ${authToken}`
+          'Authorization': 'Token ' + token
+        },
+        success: function(response) {
+          // Display the response as plain HTML
+          $('#responseContainer').html(response);
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
         }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response data here
-            console.log(data);
-        })
-        .catch(error => {
-            // Handle any errors that occur during the request
-            console.error('Error:', error);
-        });
-    }, 2000);
+      });
+    }
+  });
 </script>
+
+</body>
+</html>
