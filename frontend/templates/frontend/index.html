@@ -1,103 +1,213 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Form</title>
+    <title>Example Frontend</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="email"],
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #logoutButton {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        #registerAndLoginResponseContainer,
+        #getDataResponseContainer,
+        #postDataResponseContainer {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: monospace; /* Use a monospace font for readability */
+            font-size: 12px; /* Adjust the font size as needed */
+            white-space: pre-wrap; /* Preserve line breaks */
+            word-wrap: break-word; /* Break long words */
+        }
+
+
+        #textsButton,
+        #projectsButton,
+        #textButton,
+        #projectButton {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #projectsButton {
+            margin-bottom: 50px;
+        }
+
+        #textButton {
+            margin-bottom: 30px;
+        }
+
+        #textTextField,
+        #projectTextField {
+            width: 75%;
+        }
+    </style>
+
 </head>
 <body>
-<h1>Register and login</h1>
-<h2>Register Form</h2>
-<form id="registerForm" method="post" action="http://127.0.0.1:8000/user/create/">
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="register_email" name="email" required>
-    </div>
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="register_username" name="username" required>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="register_password" name="password" required>
-    </div>
-    <div>
-        <input type="submit" value="Register">
-    </div>
-</form>
+<div class="container">
+    <h1>Register and login</h1>
+    <h2>Register Form</h2>
+    <form id="registerForm" method="post" action="http://127.0.0.1:8000/user/create/">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="register_email" name="email" required>
+        </div>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="register_username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="register_password" name="password" required>
+        </div>
+        <div>
+            <input type="submit" value="Register">
+        </div>
+    </form>
 
-<h2>Login Form</h2>
-<form id="loginForm" method="post" action="http://127.0.0.1:8000/user/login/">
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <div>
-        <input type="submit" value="Login">
-    </div>
-</form>
-<button id="logoutButton">log out</button>
+    <h2>Login Form</h2>
+    <form id="loginForm" method="post" action="http://127.0.0.1:8000/user/login/">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <input type="submit" value="Login">
+        </div>
+    </form>
+    <button id="logoutButton">log out</button>
 
-<div id="registerAndLoginResponseContainer">response should go here</div>
+    <h2>login/register response:</h2>
+    <div id="registerAndLoginResponseContainer">response should go here</div>
 
-<h1>Get data</h1>
+    <h1>Get data</h1>
 
-<button id="textsButton">all texts</button>
-<button id="projectsButton">all projects</button>
-<br/>
-<input type="text" id="textTextField">
-<button id="textButton">get text</button>
-<br/>
-<input type="text" id="projectTextField">
-<button id="projectButton">get project</button>
-<br/>
-<br/>
-<div id="getDataResponseContainer">response should go here</div>
+    <button id="textsButton">all texts</button>
+    <button id="projectsButton">all projects</button>
+    <br/>
+    <div>
+        <input type="text" id="textTextField">
+        <button id="textButton">get text</button>
+    </div>
+    <br/>
+    <div>
+        <input type="text" id="projectTextField">
+        <button id="projectButton">get project</button>
+    </div>
+    <br/>
+    <br/>
+    <h2>get data response:</h2>
+    <div id="getDataResponseContainer">response should go here</div>
 
-<h1>Post data</h1>
+    <h1>Post data</h1>
 
-<h2>Project Form</h2>
-<form id="projectForm" method="post" action="http://127.0.0.1:8000/internal/projects/">
-    <div>
-        <label for="projectName">Name:</label>
-        <input type="text" id="projectName" name="name" required>
-    </div>
-    <div>
-        <label for="projectManager">Manager:</label>
-        <input type="text" id="projectManager" name="manager" required>
-    </div>
-    <div>
-        <label for="projectWriters">Writers:</label>
-        <input type="text" id="projectWriters" name="writers" required>
-    </div>
-    <div>
-        <label for="projectStartDate">Start date:</label>
-        <input type="text" id="projectStartDate" name="startDate" required>
-    </div>
-    <div>
-        <input type="submit" value="POST">
-    </div>
-</form>
+    <h2>Project Form</h2>
+    <form id="projectForm" method="post" action="http://127.0.0.1:8000/internal/projects/">
+        <div>
+            <label for="projectName">Name:</label>
+            <input type="text" id="projectName" name="name" required>
+        </div>
+        <div>
+            <label for="projectManager">Manager:</label>
+            <input type="text" id="projectManager" name="manager" required>
+        </div>
+        <div>
+            <label for="projectWriters">Writers:</label>
+            <input type="text" id="projectWriters" name="writers" required>
+        </div>
+        <div>
+            <label for="projectStartDate">Start date:</label>
+            <input type="text" id="projectStartDate" name="startDate" required>
+        </div>
+        <div>
+            <input type="submit" value="POST">
+        </div>
+    </form>
 
-<h2>Text Form</h2>
-<form id="textForm" method="post" action="http://127.0.0.1:8000/internal/texts/">
-    <div>
-        <label for="textProject">Project:</label>
-        <input type="text" id="textProject" name="project" required>
-    </div>
-    <div>
-        <label for="textBody">Body:</label>
-        <input type="text" id="textBody" name="body" required>
-    </div>
-    <div>
-        <input type="submit" value="POST">
-    </div>
-</form>
+    <h2>Text Form</h2>
+    <form id="textForm" method="post" action="http://127.0.0.1:8000/internal/texts/">
+        <div>
+            <label for="textProject">Project:</label>
+            <input type="text" id="textProject" name="project" required>
+        </div>
+        <div>
+            <label for="textBody">Body:</label>
+            <input type="text" id="textBody" name="body" required>
+        </div>
+        <div>
+            <input type="submit" value="POST">
+        </div>
+    </form>
 
-<div id="postDataResponseContainer">response should go here</div>
+    <h2>post data response:</h2>
+    <div id="postDataResponseContainer">response should go here</div>
+</div>
+
 
 <script>
 
@@ -289,13 +399,13 @@
 
     function printResponseForRegisterAndLogin(response) {
         var html = '';
-        if(Array.isArray(response)) {
+        if (Array.isArray(response)) {
             response.forEach(function (obj) {
-            Object.keys(obj).forEach(function (key) {
-                var value = obj[key];
-                html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
+                Object.keys(obj).forEach(function (key) {
+                    var value = obj[key];
+                    html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
+                });
             });
-        });
         } else {
             Object.keys(response).forEach(function (key) {
                 var value = response[key];
@@ -307,13 +417,13 @@
 
     function printResponseForGetData(response) {
         var html = '';
-        if(Array.isArray(response)) {
+        if (Array.isArray(response)) {
             response.forEach(function (obj) {
-            Object.keys(obj).forEach(function (key) {
-                var value = obj[key];
-                html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
+                Object.keys(obj).forEach(function (key) {
+                    var value = obj[key];
+                    html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
+                });
             });
-        });
         } else {
             Object.keys(response).forEach(function (key) {
                 var value = response[key];
@@ -325,13 +435,13 @@
 
     function printResponseForPostData(response) {
         var html = '';
-        if(Array.isArray(response)) {
+        if (Array.isArray(response)) {
             response.forEach(function (obj) {
-            Object.keys(obj).forEach(function (key) {
-                var value = obj[key];
-                html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
+                Object.keys(obj).forEach(function (key) {
+                    var value = obj[key];
+                    html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
+                });
             });
-        });
         } else {
             Object.keys(response).forEach(function (key) {
                 var value = response[key];
