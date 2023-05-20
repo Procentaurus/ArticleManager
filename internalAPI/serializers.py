@@ -47,10 +47,11 @@ class TextFormSerializer(serializers.ModelSerializer):
     project = serializers.SlugRelatedField(slug_field='name', queryset=Project.objects.all())
 
     def validate(self, attrs):
-        sanitized_attrs = {}
-        for key, value in attrs.items():
-            sanitized_value = bleach.clean(value)
-            sanitized_attrs[key] = sanitized_value
+        sanitized_attrs = attrs.copy()  # Create a copy of the original attrs dictionary
+
+        if "body" in sanitized_attrs:
+            sanitized_attrs["body"] = bleach.clean(sanitized_attrs["body"])
+
         return sanitized_attrs
 
     
