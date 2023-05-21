@@ -80,7 +80,9 @@
         #textsButton,
         #projectsButton,
         #textButton,
-        #projectButton {
+        #projectButton,
+        #publicationsButton,
+        #publicationButton {
             background-color: #008CBA;
             color: white;
             padding: 10px 20px;
@@ -90,15 +92,12 @@
         }
 
         #projectsButton {
-            margin-bottom: 50px;
-        }
-
-        #textButton {
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         #textTextField,
-        #projectTextField {
+        #projectTextField,
+        #publicationTextField {
             width: 75%;
         }
     </style>
@@ -149,6 +148,7 @@
 
     <button id="textsButton">all texts</button>
     <button id="projectsButton">all projects</button>
+    <button id="publicationsButton">all publications</button>
     <br/>
     <div>
         <input type="text" id="textTextField">
@@ -158,6 +158,10 @@
     <div>
         <input type="text" id="projectTextField">
         <button id="projectButton">get project</button>
+    </div>
+    <div>
+        <input type="text" id="publicationTextField">
+        <button id="publicationButton">get publication</button>
     </div>
     <br/>
     <br/>
@@ -204,6 +208,29 @@
         </div>
     </form>
 
+    <h2>Publication Form</h2>
+    <form id="publicationForm" method="post" action="http://127.0.0.1:8000/external/publications/">
+        <div>
+            <label for="publicationManager">Manager:</label>
+            <input type="text" id="publicationManager" name="manager" required>
+        </div>
+        <div>
+            <label for="publicationTitle">Title:</label>
+            <input type="text" id="publicationTitle" name="title" required>
+        </div>
+        <div>
+            <label for="publicationBody">Body:</label>
+            <input type="text" id="publicationBody" name="body" required>
+        </div>
+        <div>
+            <label for="publicationIsAvailable">isAvailable:</label>
+            <input type="text" id="publicationIsAvailable" name="isAvailable" required>
+        </div>
+        <div>
+            <input type="submit" value="POST">
+        </div>
+    </form>
+
     <h2>post data response:</h2>
     <div id="postDataResponseContainer">response should go here</div>
 </div>
@@ -229,7 +256,7 @@
                     localStorage.setItem('token', response.token);
                 },
                 error: function (xhr, status, error) {
-                    printErrorForRegisterAndLogin(error);
+                    printErrorForRegisterAndLogin(xhr, status, error);
                 }
             });
         });
@@ -251,7 +278,7 @@
                     printResponseForRegisterAndLogin(response);
                 },
                 error: function (xhr, status, error) {
-                    printErrorForRegisterAndLogin(error);
+                    printErrorForRegisterAndLogin(xhr, status, error);
                 }
             });
         });
@@ -279,7 +306,7 @@
                 printResponseForPostData(response);
             },
             error: function (xhr, status, error) {
-                printErrorForPostData(error);
+                printErrorForPostData(xhr, status, error);
             }
         });
     });
@@ -304,7 +331,34 @@
                 printResponseForPostData(response);
             },
             error: function (xhr, status, error) {
-                printErrorForPostData(error);
+                printErrorForPostData(xhr, status, error);
+            }
+        });
+    });
+
+    $('#publicationForm').submit(function (e) {
+        e.preventDefault();
+        var token = localStorage.getItem('token');
+
+        var formData = {
+            manager: $('#publicationManager').val(),
+            title: $('#publicationTitle').val(),
+            body: $('#publicationBody').val(),
+            isAvailable: $('#publicationIsAvailable').val()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            data: formData,
+            success: function (response) {
+                printResponseForPostData(response);
+            },
+            error: function (xhr, status, error) {
+                printErrorForPostData(xhr, status, error);
             }
         });
     });
@@ -321,7 +375,7 @@
                 printResponseForRegisterAndLogin(response);
             },
             error: function (xhr, status, error) {
-                printErrorForRegisterAndLogin(error);
+                printErrorForRegisterAndLogin(xhr, status, error);
             }
         });
         localStorage.setItem('token', '');
@@ -339,7 +393,7 @@
                 printResponseForGetData(response);
             },
             error: function (xhr, status, error) {
-                printErrorForGetData(error);
+                printErrorForGetData(xhr, status, error);
             }
         });
     });
@@ -356,7 +410,24 @@
                 printResponseForGetData(response);
             },
             error: function (xhr, status, error) {
-                printErrorForGetData(error);
+                printErrorForGetData(xhr, status, error);
+            }
+        });
+    });
+
+    document.getElementById("publicationsButton").addEventListener("click", function () {
+        var token = localStorage.getItem('token');
+        $.ajax({
+            type: 'GET',
+            url: 'http://127.0.0.1:8000/external/publications/',
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            success: function (response) {
+                printResponseForGetData(response);
+            },
+            error: function (xhr, status, error) {
+                printErrorForGetData(xhr, status, error);
             }
         });
     });
@@ -374,7 +445,7 @@
                 printResponseForGetData(response);
             },
             error: function (xhr, status, error) {
-                printErrorForGetData(error);
+                printErrorForGetData(xhr, status, error);
             }
         });
     });
@@ -392,7 +463,25 @@
                 printResponseForGetData(response);
             },
             error: function (xhr, status, error) {
-                printErrorForGetData(error);
+                printErrorForGetData(xhr, status, error);
+            }
+        });
+    });
+
+    document.getElementById("publicationButton").addEventListener("click", function () {
+        var token = localStorage.getItem('token');
+        var publicationName = document.getElementById("publicationTextField").value;
+        $.ajax({
+            type: 'GET',
+            url: 'http://127.0.0.1:8000/external/publications/' + publicationName + '/',
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            success: function (response) {
+                printResponseForGetData(response);
+            },
+            error: function (xhr, status, error) {
+                printErrorForGetData(xhr, status, error);
             }
         });
     });
@@ -451,16 +540,28 @@
         $('#postDataResponseContainer').html(html);
     }
 
-    function printErrorForRegisterAndLogin(error) {
-        $('#registerAndLoginResponseContainer').html(error);
+    function printErrorForRegisterAndLogin(xhr, status, error) {
+        var html = '';
+        html += '<p>' + xhr['responseText'] + '</p>';
+        html += '<p>' + xhr['status'] + '</p>';
+        html += '<p>' + xhr['statusText'] + '</p>';
+        $('#registerAndLoginResponseContainer').html(html);
     }
 
-    function printErrorForGetData(error) {
-        $('#getDataResponseContainer').html(error);
+    function printErrorForGetData(xhr, status, error) {
+        var html = '';
+        html += '<p>' + xhr['responseText'] + '</p>';
+        html += '<p>' + xhr['status'] + '</p>';
+        html += '<p>' + xhr['statusText'] + '</p>';
+        $('#getDataResponseContainer').html(html);
     }
 
-    function printErrorForPostData(error) {
-        $('#postDataResponseContainer').html(error);
+    function printErrorForPostData(xhr, status, error) {
+        var html = '';
+        html += '<p>' + xhr['responseText'] + '</p>';
+        html += '<p>' + xhr['status'] + '</p>';
+        html += '<p>' + xhr['statusText'] + '</p>';
+        $('#postDataResponseContainer').html(html);
     }
 
 </script>
