@@ -765,6 +765,10 @@
 
     function printResponseForRegisterAndLogin(response) {
         var html = '';
+        if( response === undefined) {
+            $('#registerAndLoginResponseContainer').html('no response');
+            return;
+        }
         if (Array.isArray(response)) {
             response.forEach(function (obj) {
                 html+='<br>';
