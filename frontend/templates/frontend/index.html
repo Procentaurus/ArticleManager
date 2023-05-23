@@ -65,7 +65,8 @@
 
         #registerAndLoginResponseContainer,
         #getDataResponseContainer,
-        #postDataResponseContainer {
+        #postDataResponseContainer,
+        #deleteDataResponseContainer {
             margin-top: 20px;
             padding: 10px;
             border: 1px solid #ccc;
@@ -82,7 +83,10 @@
         #textButton,
         #projectButton,
         #publicationsButton,
-        #publicationButton {
+        #publicationButton,
+        #deleteTextButton,
+        #deleteProjectButton,
+        #deletePublicationButton {
             background-color: #008CBA;
             color: white;
             padding: 10px 20px;
@@ -97,8 +101,14 @@
 
         #textTextField,
         #projectTextField,
-        #publicationTextField {
+        #publicationTextField,
+        #deleteTextTextField,
+        #deleteProjectTextField {
             width: 75%;
+        }
+
+        #deletePublicationTextField {
+            width: 70%;
         }
     </style>
 
@@ -233,6 +243,27 @@
 
     <h2>post data response:</h2>
     <div id="postDataResponseContainer">response should go here</div>
+
+    <h1>Delete data</h1>
+
+    <br/>
+    <div>
+        <input type="text" id="deleteTextTextField">
+        <button id="deleteTextButton">delete text</button>
+    </div>
+    <br/>
+    <div>
+        <input type="text" id="deleteProjectTextField">
+        <button id="deleteProjectButton">delete project</button>
+    </div>
+    <div>
+        <input type="text" id="deletePublicationTextField">
+        <button id="deletePublicationButton">delete publication</button>
+    </div>
+    <br/>
+    <br/>
+    <h2>delete data response:</h2>
+    <div id="deleteDataResponseContainer">response should go here</div>
 </div>
 
 
@@ -439,6 +470,7 @@
             }
         });
         }
+        localStorage.removeItem('token');
     });
 
     document.getElementById("textsButton").addEventListener("click", function () {
@@ -631,6 +663,106 @@
         }
     });
 
+    document.getElementById("deleteProjectButton").addEventListener("click", function () {
+        var token = localStorage.getItem('token');
+        var projectName = document.getElementById("deleteProjectTextField").value;
+        if(token !== '' && token != null) {
+            $.ajax({
+            type: 'DELETE',
+            url: 'http://127.0.0.1:8000/internal/projects/' + projectName + '/',
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            success: function (response) {
+                printResponseForDeleteData(response);
+            },
+            error: function (xhr, status, error) {
+                printErrorForDeleteData(xhr, status, error);
+            }
+        });
+        } else {
+            $.ajax({
+            type: 'DELETE',
+            url: 'http://127.0.0.1:8000/internal/projects/' + projectName + '/',
+            success: function (response) {
+                printResponseForDeleteData(response);
+            },
+            error: function (xhr, status, error) {
+                printErrorForDeleteData(xhr, status, error);
+            }
+        });
+        }
+
+    });
+
+    document.getElementById("deleteTextButton").addEventListener("click", function () {
+        var token = localStorage.getItem('token');
+        var textNumber = document.getElementById("deleteTextTextField").value;
+        if(token !== '' && token != null) {
+            $.ajax({
+            type: 'DELETE',
+            url: 'http://127.0.0.1:8000/internal/texts/' + textNumber + '/',
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            success: function (response) {
+                printResponseForDeleteData(response);
+            },
+            error: function (xhr, status, error) {
+                printErrorForDeleteData(xhr, status, error);
+            }
+        });
+        } else {
+            $.ajax({
+            type: 'DELETE',
+            url: 'http://127.0.0.1:8000/internal/texts/' + textNumber + '/',
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            success: function (response) {
+                printResponseForDeleteData(response);
+            },
+            error: function (xhr, status, error) {
+                printErrorForDeleteData(xhr, status, error);
+            }
+        });
+        }
+    });
+
+    document.getElementById("deletePublicationButton").addEventListener("click", function () {
+        var token = localStorage.getItem('token');
+        var publicationName = document.getElementById("deletePublicationTextField").value;
+        if(token !== '' && token != null) {
+            $.ajax({
+            type: 'DELETE',
+            url: 'http://127.0.0.1:8000/external/publications/' + publicationName + '/',
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            success: function (response) {
+                printResponseForDeleteData(response);
+            },
+            error: function (xhr, status, error) {
+                printErrorForDeleteData(xhr, status, error);
+            }
+        });
+        } else {
+            $.ajax({
+            type: 'DELETE',
+            url: 'http://127.0.0.1:8000/external/publications/' + publicationName + '/',
+            headers: {
+                'Authorization': 'Token ' + token
+            },
+            success: function (response) {
+                printResponseForDeleteData(response);
+            },
+            error: function (xhr, status, error) {
+                printErrorForDeleteData(xhr, status, error);
+            }
+        });
+        }
+    });
+
     function printResponseForRegisterAndLogin(response) {
         var html = '';
         if (Array.isArray(response)) {
@@ -688,6 +820,10 @@
         $('#postDataResponseContainer').html(html);
     }
 
+    function printResponseForDeleteData(response) {
+        $('#deleteDataResponseContainer').html('no response');
+    }
+
     function printErrorForRegisterAndLogin(xhr, status, error) {
         var html = '';
         html += '<p>' + xhr['responseText'] + '</p>';
@@ -712,6 +848,13 @@
         $('#postDataResponseContainer').html(html);
     }
 
+    function printErrorForDeleteData(xhr, status, error) {
+        var html = '';
+        html += '<p>' + xhr['responseText'] + '</p>';
+        html += '<p>' + xhr['status'] + '</p>';
+        html += '<p>' + xhr['statusText'] + '</p>';
+        $('#deleteDataResponseContainer').html(html);
+    }
 </script>
 
 </body>
