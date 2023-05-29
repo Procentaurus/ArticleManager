@@ -58,7 +58,12 @@ class WantToAddTextToOneOfHisProjects(permissions.BasePermission):
         if not project_name:
             return False
         
-        project = Project.objects.get(name=project_name)
+        project = None
+        try:
+            project = Project.objects.get(name=project_name)
+        except:
+            return PermissionError("There is no such project.")
+        
         if request.user in project.writers.all():
             return True
         else:
@@ -94,9 +99,12 @@ class WantToAddCommentToTextInOneOfHisProjects(permissions.BasePermission):
 
         if not text_id:
             return False
-
-        text = Text.objects.get(id=text_id)
-        project = text.project
+        
+        try:
+            text = Text.objects.get(id=text_id)
+            project = text.project
+        except:
+            return PermissionError("There is no such text.")
         
         if request.user in project.writers.all():
             return True

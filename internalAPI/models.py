@@ -30,7 +30,7 @@ class Comment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     author = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     text = models.ForeignKey(Text, on_delete=models.CASCADE)
-    body = models.TextField(max_length=300, null=False)
+    body = models.TextField(max_length=500, null=False)
     creationDate = models.DateField(auto_now_add=True)
     
     class Meta:
