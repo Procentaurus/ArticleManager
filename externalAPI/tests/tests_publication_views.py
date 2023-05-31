@@ -7,12 +7,6 @@ from externalAPI.models import Publication
 from customUser.models import MyUser
 from externalAPI.views import *
 
-# for particular folder -> python manage.py test <folder_name> --pattern="test_*.py"
-# for particular file -> python manage.py test publication_tests.views_tests
-# for particular class -> python manage.py test publication_tests.views_tests.xxxTest
-# for particular test -> python manage.py test publication_tests.views_tests.xxxTest -k <folder_name>
-
-
 def get_list_url():
 	return reverse('publication_list')
 
