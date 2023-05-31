@@ -15,7 +15,7 @@ class PublicationFormSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
 
         sanitized_attrs = {"manager": attrs["manager"]}
-        proper_lengths = {"title":100, "body":5000, "isAvailable":10}
+        proper_lengths = {"title":80, "body":5000, "isAvailable":10}
         errors = {}
         error_counter = 0
 
