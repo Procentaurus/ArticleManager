@@ -70,8 +70,8 @@ class TextFormSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
 
-        sanitized_attrs = {"project":attrs["project"]}
-        proper_lengths = {"body":1000}
+        sanitized_attrs = {"project": attrs["project"]}
+        proper_lengths = {"body": 1000}
         errors = {}
         error_counter = 0
 
@@ -86,7 +86,7 @@ class TextFormSerializer(serializers.ModelSerializer):
             sanitized_attrs[key] = bleach.clean(attrs[key])
 
         if error_counter > 0:
-            return serializers.ValidationError(errors)
+            raise serializers.ValidationError(errors)
         else:
             return sanitized_attrs
            

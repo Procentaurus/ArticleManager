@@ -147,21 +147,21 @@ class CommentDetailTest(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_delete_publication_editor(self):
+    def test_delete_comment_editor(self):
         self.client.force_authenticate(user=self.editor)
 
         res = self.client.delete(get_detail_url(self.comment.id))
 
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_delete_publication_author(self):
+    def test_delete_comment_author(self):
         self.client.force_authenticate(user=self.author)
 
         res = self.client.delete(get_detail_url(self.comment.id))
 
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
 
-    def test_delete_publication_projectmanager(self):
+    def test_delete_comment_projectmanager(self):
         self.client.force_authenticate(user=self.project_manager)
 
         res = self.client.delete(get_detail_url(self.comment.id))
