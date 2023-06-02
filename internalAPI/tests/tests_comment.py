@@ -117,16 +117,18 @@ class CommentDetailTest(TestCase):
         self.author = sample_user("yyyyyyyyyy", "n@wp.pl")
         self.normal = sample_user("wwwwwwwww", "w@wp.pl")
         self.project_manager = sample_user("zzzzzzzzz", "z@wp.pl")
-        self.project = sample_project(sample_project_json("asd",self.project_manager,[self.project_manager, self.author, self.normal], date.today()))
-        self.text = sample_text(sample_text_json(self.author,self.project,"asdasdasdasdasdasdasdasd"))
+        self.project = sample_project("asd",self.project_manager,[self.project_manager, self.author], date.today())
+        self.text = sample_text(self.author,self.project,"asdasdasdasdasdasdasdasd", date.today())
+        self.comment = sample_comment(self.author, self.text, "ajshdfbasmhdgfvbasmdjghfvbzsdjhcvbasd", date.today())
 
         self.editor.save()
         self.normal.save()
         self.author.save()
-        self.project_manager()
+        self.project_manager.save()
 
         self.project.save()
         self.text.save()
+        self.comment.save()
         
     def tearDown(self):
         self.editor.delete()
@@ -134,7 +136,36 @@ class CommentDetailTest(TestCase):
         self.author.delete()
         self.project_manager.delete()
 
-        self.project.delete()
+        self.comment.delete()
         self.text.delete()
+        self.project.delete()
+
+
+    # checking delete method
+    def test_delete_comment_unauthenticated(self):
+        res = self.client.delete(get_detail_url(self.comment.id))
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_publication_editor(self):
+        self.client.force_authenticate(user=self.editor)
+
+        res = self.client.delete(get_detail_url(self.comment.id))
+
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_delete_publication_author(self):
+        self.client.force_authenticate(user=self.author)
+
+        res = self.client.delete(get_detail_url(self.comment.id))
+
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_publication_projectmanager(self):
+        self.client.force_authenticate(user=self.project_manager)
+
+        res = self.client.delete(get_detail_url(self.comment.id))
+
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
 
     
