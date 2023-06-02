@@ -10,39 +10,35 @@ def sample_user(username, email, isEditor=False):
     }
 	return MyUser.objects.create(**sample)
 
-def sample_comment_json(author, text, body, creationDate):
+def sample_comment_json(text, body, author):
 	sample = {
-		"author": author.username,
 		"text": text.id,
 		"body": body,
-		"creationDate": creationDate
+		"author":author.username
     }
 	return sample
 
-def sample_comment(author, text, body, creationDate):
+def sample_comment(text, body, author):
 	sample = {
-		"author": author,
 		"text": text,
 		"body": body,
-		"creationDate": creationDate
+		"author":author
     }
 	return Comment.objects.create(**sample)
 
-def sample_text_json(author, project, body, creationDate):
+def sample_text_json(project, body, author):
 	sample = {
-		"author": author.username,
 		"project": project.name,
 		"body": body,
-		"creationDate": creationDate
+		"author":author.username
     }
 	return sample
     
-def sample_text(author, project, body, creationDate):
+def sample_text(project, body, author):
 	sample = {
-		"author": author,
 		"project": project,
 		"body": body,
-		"creationDate": creationDate
+		"author":author
     }
 	return Text.objects.create(**sample)
 
