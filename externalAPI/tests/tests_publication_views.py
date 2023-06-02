@@ -3,9 +3,8 @@ from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
 
-from externalAPI.models import Publication
 from customUser.models import MyUser
-from externalAPI.views import *
+from ..views import *
 
 def get_list_url():
 	return reverse('publication_list')

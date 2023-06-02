@@ -1,7 +1,6 @@
 from django.test import TestCase
-from django.core.exceptions import ValidationError
 from django.db import IntegrityError
-from externalAPI.models import Publication
+from ..models import Publication
 from customUser.models import MyUser
 
 class PublicationModelTest(TestCase):
