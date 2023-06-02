@@ -31,12 +31,12 @@ def sample_publication(manager, title,body, isAvailable=True):
 	}
 	return Publication.objects.create(**sample)
 
-def sample_json(manager):
+def sample_json(manager, title, body, isAvailable):
     data = {
         "manager": manager.username,
-        "title": "Kotki i psy2",
-        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "isAvailable": "False"
+        "title": title,
+        "body": body,
+        "isAvailable": isAvailable
     }
     return data
 
@@ -56,7 +56,7 @@ class PublicationListTest(TestCase):
         self.normal.delete()
 
 
-    # cheack get method
+    # check get method
     def test_get_all_publications_unauthenticated(self):
         res = self.client.get(get_list_url())
 
@@ -71,28 +71,44 @@ class PublicationListTest(TestCase):
 
 
     # ckeck post method
-    def test_post_publication_unauthenticated(self):
-        data = sample_json(self.normal)
+    def test_post_publication_unauthenticated_right_input(self):
+        data = sample_json(self.normal, "Koty i psy i mrówki", "asfdasfdasfdfasdasfdasfdasfd", True)
 
         res = self.client.post(get_list_url(), data, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_post_publication_authenticated(self):
-        data = sample_json(self.normal)
+    def test_post_publication_authenticated_right_input(self):
+        data = sample_json(self.normal, "Koty i psy i mrówki", "asfdasfdasfdfasdasfdasfdasfd", True)
         self.client.force_authenticate(user=self.normal)
 
         res = self.client.post(get_list_url(), data, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_post_publication_editor(self):
-        data = sample_json(self.normal)
+    def test_post_publication_editor_right_input(self):
+        data = sample_json(self.normal, "Koty i psy i mrówki", "asfdasfdasfdfasdasfdasfdasfd", True)
         self.client.force_authenticate(user=self.editor)
 
         res = self.client.post(get_list_url(), data, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+    def test_post_publication_editor_title_too_short(self):
+        data = sample_json(self.normal, "K", "asfdasfdasfdfasdasfdasfdasfd", True)
+        self.client.force_authenticate(user=self.editor)
+
+        res = self.client.post(get_list_url(), data, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_post_publication_editor_title_too_long(self):
+        data = sample_json(self.normal, "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii", "asfdasfdasfdfasdasfdasfdasfd", True)
+        self.client.force_authenticate(user=self.editor)
+
+        res = self.client.post(get_list_url(), data, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
 
 class PublicationDetailTest(TestCase):
@@ -150,7 +166,7 @@ class PublicationDetailTest(TestCase):
 
     # checking patch method
     def test_patch_publication_unauthenticated(self):
-        sample = sample_json(self.normal)
+        sample = sample_json(self.normal, "Koty i psy i mrówki", "asfdasfdasfdfasdasfdasfdasfd", True)
 
         res = self.client.patch(get_detail_url(self.publication.title), sample, format='json')
 
@@ -158,7 +174,7 @@ class PublicationDetailTest(TestCase):
 
     def test_patch_publication_editor(self):
         self.client.force_authenticate(user=self.editor)
-        sample = sample_json(self.normal)
+        sample = sample_json(self.normal, "Koty i psy i mrówki", "asfdasfdasfdfasdasfdasfdasfd", True)
 
         res = self.client.patch(get_detail_url(self.publication.title), sample, format='json')
 
@@ -166,7 +182,7 @@ class PublicationDetailTest(TestCase):
 
     def test_patch_publication_not_editor(self):
         self.client.force_authenticate(user=self.normal)
-        sample = sample_json(self.normal)
+        sample = sample_json(self.normal, "Koty i psy i mrówki", "asfdasfdasfdfasdasfdasfdasfd", True)
 
         res = self.client.patch(get_detail_url(self.publication.title), sample, format='json')
 

@@ -23,18 +23,6 @@ class PublicationModelTest(TestCase):
         self.assertTrue(publication.isAvailable)
         self.assertEqual(publication.numberOfDownloads, 0)
 
-    def test_title_min_length_validation(self):
-        with self.assertRaises(ValidationError):
-            publication = Publication.objects.create(
-                manager=self.user,
-                body='Publication body',
-                title='Short',
-                isAvailable=True,
-                numberOfDownloads=0
-            )
-            publication.full_clean()
-
-
     def test_is_available_default_value(self):
         publication = Publication.objects.create(
             manager=self.user,
