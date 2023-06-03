@@ -14,7 +14,7 @@ from ArticleManager.throttlers import TextRateThrottle, CommentRateThrottle, Pro
 
 #  -----------    classes for Text model    ---------------
 
-class TextList(mixins.ListModelMixin, mixins.CreateModelMixin,generics.GenericAPIView):
+class TextList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
   
     permission_classes = (
         IsAuthenticated & ((~ChoseSafeMethod & WantToAddTextToOneOfHisProjects) | ChoseSafeMethod),
@@ -237,14 +237,13 @@ class ProjectList(mixins.ListModelMixin, mixins.CreateModelMixin,generics.Generi
         return super().filter_queryset(queryset)
     
     def perform_create(self, serializer):
-        
         try:
             newManager = MyUser.objects.get(username=serializer.validated_data["manager"])
-        except:
-            raise ValidationError("There is no such user as {}".format(serializer.validated_data["manager"]))
-        
+        except MyUser.DoesNotExist:
+            raise ValidationError("User '{}' does not exist.".format(serializer.validated_data["manager"]))
+
         if newManager.isProjectManager:
-            raise ValidationError("The chosen user can't become manager. He already is.")
+            raise ValidationError("The chosen user '{}' cannot become the manager as they are already a manager.".format(newManager.username))
         else:
             name = bleach.clean(serializer.validated_data.get('name'))
             serializer.validated_data['name'] = name
@@ -266,8 +265,8 @@ class ProjectDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.D
     lookup_field = 'name'
     permission_classes = (
         IsAuthenticated &
-            (IsEditor | (IsProjectManager | ~ChoseDeleteMethod) | (ChoseSafeMethod & WantToSeeHisProject)),
-    ) 
+            (IsEditor | ((ChosePatchMethod | ChoseSafeMethod) & IsProjectManager) | (ChoseSafeMethod & WantToSeeHisProject)),
+    )
     
     def get_serializer_class(self):
         if self.request.method in ['GET', 'DELETE']:

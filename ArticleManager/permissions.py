@@ -47,6 +47,14 @@ class ChoseDeleteMethod(permissions.BasePermission):
             return True
         else:
             return False
+        
+class ChosePatchMethod(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        if request.method == 'PATCH':
+            return True
+        else:
+            return False
 
 # --------   Text permissions  --------
 

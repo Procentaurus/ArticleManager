@@ -16,8 +16,8 @@ class ProjectFormSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
 
-        sanitized_attrs = {"manager":attrs["manager"], "writers":attrs["writers"]}
-        proper_lengths = {"name":100, "date": 20}
+        sanitized_attrs = {"manager": attrs["manager"], "writers": attrs["writers"], "startDate": attrs["startDate"]}
+        proper_lengths = {"name":100}
         errors = {}
         error_counter = 0
 
@@ -27,12 +27,12 @@ class ProjectFormSerializer(serializers.ModelSerializer):
                     errors[error_counter] = f"Input for field {key} is too long."
                     error_counter += 1
             except:
-                return serializers.ValidationError("No all required fields.")
+                raise serializers.ValidationError("No all required fields or wrong names.")
 
             sanitized_attrs[key] = bleach.clean(attrs[key])
-
+            
         if error_counter > 0:
-            return serializers.ValidationError(errors)
+            raise serializers.ValidationError(errors)
         else:
             return sanitized_attrs
     
@@ -81,7 +81,7 @@ class TextFormSerializer(serializers.ModelSerializer):
                     errors[error_counter] = f"Input for field {key} is too long."
                     error_counter += 1
             except:
-                return serializers.ValidationError("No all required fields.")
+                raise serializers.ValidationError("No all required fields.")
 
             sanitized_attrs[key] = bleach.clean(attrs[key])
 
@@ -130,7 +130,7 @@ class CommentFormSerializer(serializers.ModelSerializer):
             if value > len(attrs[key]):
                 sanitized_value = bleach.clean(attrs[key])
                 sanitized_attrs[key] = sanitized_value
-            else: return ValueError(f"Too long input for field {key}")
+            else: raise ValueError(f"Too long input for field {key}")
 
         return sanitized_attrs
     

@@ -5,7 +5,7 @@ from customUser.models import MyUser
 
 class Project(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    name = models.CharField(max_length=40, unique=True)
+    name = models.CharField(max_length=80, unique=True)
     manager = models.OneToOneField(MyUser,related_name='manager', on_delete=models.SET_NULL, null=True)
     writers = models.ManyToManyField(MyUser,related_name='writers')
     startDate = models.DateField()
