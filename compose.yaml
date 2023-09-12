@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: .
+      args:
+        - BUILD_TAG=1.0
+    ports:
+      - "8000:8000"
+    volumes:
+      - sqlite_data:/app/data  # Define a volume for SQLite data
+    container_name: article-manager-app
+volumes:
+  sqlite_data:  # Define a named volume for SQLite data
